@@ -1,0 +1,265 @@
+### LOGIN user1
+POST http://localhost:3000/api/sessions HTTP/1.1
+content-type: application/json
+
+{
+    "username": "user1@email.com",
+    "password": "password"
+}
+
+### LOGIN user2
+POST http://localhost:3000/api/sessions HTTP/1.1
+content-type: application/json
+
+{
+    "username": "user2@email.com",
+    "password": "password"
+}
+
+### LOGIN user3
+POST http://localhost:3000/api/sessions HTTP/1.1
+content-type: application/json
+
+{
+    "username": "user3@email.com",
+    "password": "password"
+}
+
+### Still logged in
+GET http://localhost:3000/api/sessions/current HTTP/1.1
+
+### Logout
+DELETE http://localhost:3000/api/sessions/current HTTP/1.1
+
+### get users
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+### Add a block
+POST http://localhost:3000/api/pages/:pageid/block
+Content-Type: application/json
+
+{
+    "block": {
+        "type": "header",
+        "content": "HEADER",
+        "rank": 20
+    }
+}
+
+### Create a published page for the current user 
+POST http://localhost:3000/api/pages
+Content-Type: application/json
+
+{
+    "page": {
+        "title": "AlreadyPublishedPage",
+        "publishDate": "01/01/2020"
+    },
+    "blocks": [
+        {
+            "type": "header",
+            "content": "My published page",
+            "rank": 1
+        },
+        {
+            "type": "image",
+            "content": "path/To/The/Img",
+            "rank": 2
+        },
+        {
+            "type": "paragraph",
+            "content": "Welcome, this is my page.",
+            "rank": 3
+        },
+        {
+            "type": "paragraph",
+            "content": "There is not so much to show",
+            "rank": 4
+        }
+    ]
+}
+
+### Create a published page for the current user 
+POST http://localhost:3000/api/pages
+Content-Type: application/json
+
+{
+    "page": {
+        "title": "ANOTHERAlreadyPublishedPage",
+        "publishDate": "01/01/2020"
+    },
+    "blocks": [
+        {
+            "type": "header",
+            "content": "My other published page",
+            "rank": 1
+        },
+        {
+            "type": "image",
+            "content": "path/To/The/Img",
+            "rank": 2
+        },
+        {
+            "type": "paragraph",
+            "content": "Welcome, this is my OTHER page.",
+            "rank": 3
+        }
+    ]
+}
+
+### Create an unpublished page for the current user 
+POST http://localhost:3000/api/pages
+Content-Type: application/json
+
+{
+    "page": {
+        "title": "NotPublishedPage",
+        "publishDate": "01/01/2024"
+    },
+    "blocks": [
+        {
+            "type": "header",
+            "content": "My draft page",
+            "rank": 1
+        },
+        {
+            "type": "image",
+            "content": "path/To/The/Img",
+            "rank": 2
+        },
+        {
+            "type": "paragraph",
+            "content": "Welcome, this is my draft page.",
+            "rank": 3
+        },
+        {
+            "type": "paragraph",
+            "content": "Work in progress",
+            "rank": 4
+        }
+    ]
+}
+
+### Create a published page for the current user -- RANDOM TOPIC
+POST http://localhost:3000/api/pages
+Content-Type: application/json
+
+{
+    "page": {
+        "title": "How to put salt in your password",
+        "publishDate": "01/01/2020"
+    },
+    "blocks": [
+        {
+            "type": "image",
+            "content": "path/To/The/salt.jpg",
+            "rank": 2
+        },
+        {
+            "type": "paragraph",
+            "content": "You must do it for the hashed password",
+            "rank": 3
+        }
+    ]
+}
+
+### Get pages for the back-office (ALSO DRAFT)
+GET http://localhost:3000/api/pages
+Content-Type: application/json
+
+### Get pages for the front-office (NO DRAFT) 
+GET http://localhost:3000/api/pages/all
+Content-Type: application/json
+
+### Get blocks for the front-office (NO DRAFT)
+GET http://localhost:3000/api/pages/3/all
+Content-Type: application/json
+
+### GET blocks for the back-office (ALSO DRAFT)
+GET http://localhost:3000/api/pages/3
+Content-Type: application/json
+
+### Edit page information
+
+## TOBE called with user1 or user2 for checking if username is changed
+
+## SET UNPUBLISHED
+PUT http://localhost:3000/api/pages/1/
+Content-Type: application/json
+
+{
+    "title": "This is my changed page and I'm an user so username should not change",
+    "username": "user2",
+    "publishDate": "1/1/2024"
+}
+### SET PUBLISHED
+PUT http://localhost:3000/api/pages/1/
+Content-Type: application/json
+
+{
+    "title": "This is my changed page and I'm an user so username should not change",
+    "username": "user3",
+    "publishDate": "1/1/2020"
+}
+
+### Caller must be an ADMIN
+## TOBE called with user3
+
+## SET UNPUBLISHED
+PUT http://localhost:3000/api/pages/1/
+Content-Type: application/json
+
+{
+    "title": "This is my changed page and I'm an admin so username should change",
+    "username": "user1",
+    "publishDate": "1/1/2024"
+}
+### SET PUBLISHED
+PUT http://localhost:3000/api/pages/1/
+Content-Type: application/json
+
+{
+    "title": "This is my changed page and I'm an admin so username should change",
+    "username": "user1",
+    "publishDate": "1/1/2020"
+}
+
+### Edit block information
+PUT http://localhost:3000/api/pages/1/117
+Content-Type: application/json
+
+{
+    "content": "Maybe I should add something more with this edit"
+}
+
+### Delete a page
+DELETE http://localhost:3000/api/pages/1
+Content-Type: application/json
+
+### Delete a block
+DELETE http://localhost:3000/api/pages/3/125
+Content-Type: application/json
+
+### Move block up (swap)
+PUT http://localhost:3000/api/pages/3/126/move
+Content-Type: application/json
+
+{
+    "move": "up"
+}
+
+
+### WEBNAME 
+
+### update webname
+POST http://localhost:3000/api/webAppName
+Content-Type: application/json
+
+{
+    "name": "newNAME"
+}
+
+### get webname
+GET http://localhost:3000/api/webAppName
+Content-Type: application/json
